@@ -1,0 +1,16 @@
+torch==1.9.1
+pandas==1.1.5
+scikit-learn==0.24.2
+datasets==1.12.1
+transformers==4.11.2
+optuna==2.9.1
+nltk==3.6.3
+wandb==0.12.3
+setuptools>=52.0.0
+wheel>=0.36.0
+rouge_score==0.0.4
+sacrebleu==2.0.0
+stanza==1.2.3
+git+https://github.com/cisnlp/simalign.git#egg=simalign
+sacremoses==0.0.45
+deepspeed==0.5.4

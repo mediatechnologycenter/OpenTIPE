@@ -1,0 +1,58 @@
+{
+    "_APEArguments": "General Arguments",
+    "dataset_path": "mtc_ape_model/data/dataset.py",
+    "metric_path": "mtc_ape_model/metrics/metric.py",
+    "terminology_method": "append",
+    "run_as_test_case": true,
+
+
+    "_APEDataArguments": "APEDataArguments",
+    "name": "ape",
+    "data_dir": "data/example/terminology",
+    "src_lang": "de",
+    "tgt_lang": "fr",
+
+
+    "_APEModelArguments": "Model Arguments",
+    "model_name_or_path": "bert-base-multilingual-cased",
+    "factors_in_encoder": false,
+    "factors_in_decoder": false,
+    "adapt_hidden_layer_size": false,
+    "use_token_type_ids": true,
+
+    
+    "_APETrainingArguments": "APETrainingArguments",
+    "do_eval": true,
+    "do_predict": true,
+    "do_train": true,
+
+    "num_train_epochs": 4,
+    "group_by_length": true,
+    "token_batching": true,
+    "batch_size_includes_padding": true,
+    "per_device_train_batch_size": 64,
+    "gradient_accumulation_steps": 2,
+    "fp16": false,
+    
+    "evaluation_strategy": "steps",
+    "eval_steps": 60,
+    "train_eval_samples": 10,
+    "eval_accumulation_steps": 1,
+    "per_device_eval_batch_size": 3,
+    
+    "run_name": "example",
+    "output_dir": "outputs/example0",
+    "logging_dir": "outputs/example0/log",
+    "logging_steps": 10,
+    "save_total_limit": 4,
+    "report_to": ["wandb"],
+    
+    "_TODO2": "TODO: When false OOM ram memory",
+    "predict_with_generate": true,
+
+    "_APETestCaseArguments": "Test case arguments",
+
+    "train_size": 200,
+    "valid_size": 50,
+    "test_size": 50
+}

@@ -1,0 +1,46 @@
+# Configs
+firebaseConfig.json
+firebaseAdminCredentials.json
+
+# Backend
+__pycache__/
+*.py[cod]
+*.pyc
+venv
+
+# tests
+/api-utils/mtc_api_utils/tests
+
+# Frontend
+/frontend/ape-vue-app/coverage
+
+.DS_Store
+node_modules
+/dist
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+/frontend/ape-vue-app/.vscode
+
+# Generated files
+*template_output.yml
+*template_output.yaml
+
+# Helm
+# Subcharts
+**/charts/**/*.tgz

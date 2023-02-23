@@ -1,0 +1,4 @@
+# API requirements
+deepl>=1.11.0
+pymongo>=4.2.0
+gunicorn

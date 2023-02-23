@@ -1,0 +1,17 @@
+# Huggingface transformers
+transformers>=4.10.0
+mosestokenizer>=1.1.0
+sentencepiece>=0.1.96
+
+# Fairseq models
+fairseq==0.6.2
+hydra-core==1.1.1
+omegaconf==2.1.1
+bitarray==2.3.4
+cython>=0.29.24
+subword-nmt>=0.3.7
+tensorboardX>=2.4
+
+# PyTorch
+torch>=1.8.1,<1.9.0; python_full_version >= '3.6.2'
+torchtext==0.9.1

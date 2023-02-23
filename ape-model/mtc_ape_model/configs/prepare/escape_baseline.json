@@ -1,0 +1,19 @@
+{
+    "src": "data/eScape_en_de_NMT/NMT/all.de",
+    "mt": "data/eScape_en_de_NMT/NMT/all.mt",
+    "pe": "data/eScape_en_de_NMT/NMT/all.en",
+    "save_dir": "data/eScape_en_de_NMT/NMT/baseline",
+    "word_tokenize": true,
+    "aggressive_dash_splits": true,
+    "processes": 16,
+    "terminology_encode": false,
+    "min_sentence_threshold": 0.0,
+    "max_sentence_threshold": 1.0,
+    "alignments": null,
+    "batch_size": 32,
+    "source_language": "de",
+    "target_language": "en",
+    "dev_test_size": 0.0003,
+    "test_size": 0.5,
+    "text_min_length": 5
+}

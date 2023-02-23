@@ -1,0 +1,116 @@
+# Copyright 2022 ETH Zurich, Media Technology Center
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#   http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: "3.9"  # optional since v1.27.0
+services:
+  ape-frontend:
+    container_name: ape-frontend
+    image: ape-frontend
+    build:
+      context: ./frontend/ape-vue-app
+    env_file:
+      - frontend.env
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - ape-backend
+
+  ape-backend:
+    container_name: ape-backend
+    image: ape-backend
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+  mt-model:
+    container_name: mtc-mt-model
+    image: mt-model
+    build:
+      context: .
+      dockerfile: Dockerfile-mt-model
+    env_file:
+      - .env
+    environment:
+      # Disable auth, because communications is only happening through the docker network and no ports are open to the host machine
+      - AUTH_ENABLED=False
+    ports:
+      - "5001:5000"
+    volumes:
+      - huggingface_cache:/root/.cache/huggingface
+    #deploy:
+    #  resources:
+    #    reservations:
+    #      devices:
+    #        - driver: nvidia
+    #          count: 1
+    #          capabilities: [ gpu ]
+    restart: unless-stopped
+
+  ape-model:
+    container_name: ape-model
+    image: ape-model
+    build:
+      context: .
+      dockerfile: Dockerfile-ape-model
+    environment:
+      # Disable auth, because communications is only happening through the docker network and no ports are open to the host machine
+      - AUTH_ENABLED=False
+    env_file:
+      - .env
+    ports:
+      - "5002:5000"
+    volumes:
+      - ./model_data/models:/app/models
+      - ./model_data/dicts:/dictionaries
+      - stanza:/root/stanza_resources/
+      - datasets:/data/datasets
+    #deploy:
+    #  resources:
+    #    reservations:
+    #      devices:
+    #        - driver: nvidia
+    #          count: 1
+    #          capabilities: [ gpu ]
+    restart: unless-stopped
+
+  mongo:
+    image: mongo
+    container_name: mongo-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+
+
+volumes:
+  stanza: { }
+  huggingface_cache: { }
+  datasets: { }
+  mongodb: { }
