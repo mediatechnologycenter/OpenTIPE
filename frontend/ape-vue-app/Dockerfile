@@ -20,7 +20,6 @@ WORKDIR /app
 
 ARG USR
 ARG PWD
-ARG FIREBASE_URL
 
 SHELL ["/bin/bash", "-c"]
 
@@ -36,11 +35,6 @@ COPY src ./src
 COPY public ./public
 COPY ./*.js ./
 COPY tsconfig.json .
-
-# Download firebase config
-RUN curl \
-  -u $USR:$PWD $FIREBASE_URL/dev-firebase-auth-key.json \
-  > /app/src/modules/config/firebaseConfig.json
 
 ENTRYPOINT ["/bin/bash", "debug-entrypoint.sh"]
 CMD ["npm", "run", "serve"]

@@ -20,23 +20,15 @@ log.setLevel(
   getEnvVarOrFallback<LogLevelDesc>(EnvironmentVariable.logLevel, 'TRACE'),
 );
 
-const devFirebaseConfig = {
-  apiKey: '',
-  appId: '',
-  messagingSenderId: '',
-  projectId: '',
-  authDomain: '',
-  storageBucket: '',
-};
+const devFirebaseConfig = getEnvVarOrFallback(
+  EnvironmentVariable.devFirebaseConfig,
+  {} as any,
+);
 
-const prodFirebaseConfig = {
-  apiKey: '',
-  appId: '',
-  messagingSenderId: '',
-  projectId: '',
-  authDomain: '',
-  storageBucket: '',
-};
+const prodFirebaseConfig = getEnvVarOrFallback(
+  EnvironmentVariable.prodFirebaseConfig,
+  {} as any,
+);
 
 const options = {
   /**
@@ -83,25 +75,12 @@ const options = {
    * LANGUAGE OPTIONS ------------------------------------------------------------------------------
    */
 
-  availableLanguagePairs: [
-    {
-      from: LanguageCode.German,
-      to: LanguageCode.English,
-      allowUserDict: true,
-      availableDicts: [],
-    },
-    // {
-    //  from: LanguageCode.German,
-    //  to: LanguageCode.French,
-    //  allowUserDict: true,
-    //  availableDicts: [],
-    // },
-  ] as {
+  availableLanguagePairs: getEnvVarOrFallback<{
     from: LanguageCode;
     to: LanguageCode;
     allowUserDict: Boolean;
     availableDicts: string[];
-  }[],
+  }[]>(EnvironmentVariable.availableLanguagePairs, []),
 
   // If this is selected, the user can select multiple dictionaries at the same time.
   // Otherwise, they can only select one dictionary per translation.

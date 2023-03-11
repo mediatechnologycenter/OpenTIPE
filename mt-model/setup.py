@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#!/usr/bin/env python
+# !/usr/bin/env python
 
 from distutils.core import setup
 
@@ -24,6 +24,9 @@ setup(
     author="Media Technology Center (ETH Zürich)",
     author_email="mtc@ethz.ch",
     packages=["mtc_mt_api"],
+    install_requires=[
+        "mtc_api_utils @ git+https://github.com/mediatechnologycenter/api-utils.git",
+    ],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",

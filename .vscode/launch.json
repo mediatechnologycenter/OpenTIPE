@@ -1,0 +1,56 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Remote Attach [ape-backend]",
+      "type": "python",
+      "request": "attach",
+      "justMyCode": false,
+      "connect": {
+        "host": "localhost",
+        "port": 5050
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/app"
+        }
+      ]
+    },
+    {
+      "name": "Python: Remote Attach [mt-model]",
+      "type": "python",
+      "request": "attach",
+      "justMyCode": false,
+      "connect": {
+        "host": "localhost",
+        "port": 5051
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/mtc_ape_web_editor/mt-model/mtc_mt_api",
+          "remoteRoot": "/app/mtc_mt_api"
+        }
+      ]
+    },
+    {
+      "name": "Python: Remote Attach [ape-model]",
+      "type": "python",
+      "request": "attach",
+      "justMyCode": false,
+      "connect": {
+        "host": "localhost",
+        "port": 5052
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/mtc_ape_web_editor/ape-model/mtc_ape_api",
+          "remoteRoot": "/app/mtc_ape_api"
+        }
+      ]
+    }
+  ]
+}

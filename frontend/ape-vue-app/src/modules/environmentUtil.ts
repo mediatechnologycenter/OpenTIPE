@@ -40,33 +40,34 @@ function getEnvVar(key: EnvironmentVariable) {
  * @returns The found environment variable or the specified fallback.
  * @throws If the type is unsupported.
  */
-function getEnvVarOrFallback<A extends boolean | string | number>(
+function getEnvVarOrFallback<ExpectedType>(
   key: EnvironmentVariable,
-  fallback: A,
+  fallback: ExpectedType | undefined,
 ) {
   const val = getEnvVar(key);
-
   if (val === null || val === undefined) {
+    const msgBaseText = `Environment variable ${key} is undefined.`;
+    if (fallback === undefined) {
+      throw new Error(`${msgBaseText} Also, no fallback is defined.`);
+    }
+    console.warn(`${msgBaseText} Using fallback instead: ${fallback}`);
     return fallback;
   }
-
-  if (typeof fallback === 'boolean') {
-    return (String(val).toLowerCase() === 'true') as A;
+  try {
+    // Parsing is required if an object is stored in the variable.
+    return JSON.parse(val) as any as ExpectedType;
+  } catch (error) {
+    // If parsing fails, it is an atomic value (a string).
+    return val as any as ExpectedType;
   }
-
-  if (typeof fallback === 'number') {
-    return Number(val) as A;
-  }
-
-  if (typeof fallback === 'string') {
-    return val as A;
-  }
-
-  throw new Error('Unsupported fallback type.');
 }
 
 function isInDevelopmentMode() {
-  return process.env.NODE_ENV === 'production';
+  const mode = getEnvVarOrFallback(EnvironmentVariable.environment, 'none' as string);
+  if (mode === 'none') {
+    throw new Error('The environment variable "VUE_APP_ENVIRONMENT" must be defined in frontend.env.');
+  }
+  return mode === 'DEV';
 }
 
 export { getEnvVar, getEnvVarOrFallback, isInDevelopmentMode };

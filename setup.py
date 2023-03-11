@@ -28,6 +28,10 @@ setup(
         "mtc_ape_web_editor.api_types",
         "mtc_ape_web_editor.api_clients",
     ],
+    install_requires=[
+        "mtc_api_utils @ git+https://github.com/mediatechnologycenter/api-utils.git",
+    ],
+
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",

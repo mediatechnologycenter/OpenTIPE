@@ -179,6 +179,9 @@ enum EnvironmentVariable {
   maxSuggestionRatio = 'VUE_APP_MAX_SUGGESTION_RATIO',
   sendAllTextSegments = 'VUE_APP_SEND_ALL_TEXT_SEGMENTS',
   environment = 'VUE_APP_ENVIRONMENT',
+  availableLanguagePairs = 'VUE_APP_AVAILABLE_LANGUAGE_PAIRS',
+  devFirebaseConfig = 'VUE_APP_DEV_FIREBASE_CONFIG',
+  prodFirebaseConfig = 'VUE_APP_PROD_FIREBASE_CONFIG'
 }
 
 enum NotificationMessageType {

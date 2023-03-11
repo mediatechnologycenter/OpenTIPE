@@ -18,7 +18,6 @@ from typing import Dict, List
 
 from fastapi import HTTPException
 from mtc_api_utils.base_model import MLBaseModel
-from mtc_api_utils.init_api import download_if_not_exists
 
 from mtc_ape_api.config import ApeConfig
 from mtc_ape_model.translator import APETranslator
@@ -39,14 +38,12 @@ class ApeModel(MLBaseModel):
             print(f"Initializing model {i + 1}/{len(ApeConfig.language_pairs)}: {lang_pair} \n")
 
             model_dir = f"{ApeConfig.model_path}/{ApeConfig.model_name(lang_pair)}"
-            os.makedirs(model_dir, exist_ok=True)
 
             for model_file in ApeConfig.model_files:
-                download_if_not_exists(
-                    artifact_url=f"{ApeConfig.model_dir_url}/{ApeConfig.model_name(lang_pair)}/{model_file}",
-                    download_dir=model_dir,
-                    auth=ApeConfig.credentials
-                )
+                model_path = os.path.join(model_dir, model_file)
+
+                if not os.path.isfile(model_path):
+                    raise RuntimeError(f"Unable to find required file {model_file}. Make sure it is available under the model path: {model_dir}")
 
             self.ape_translators[lang_pair] = APETranslator(model_path=model_dir, gpu=ApeConfig.gpu, verbose=True)
 
@@ -57,15 +54,10 @@ class ApeModel(MLBaseModel):
     def init_dictionaries(self) -> None:
         print(f"Initializing dictionaries: {ApeConfig.dictionaries}")
         for dictionary in ApeConfig.dictionaries:
-            url = f"{ApeConfig.dictionary_repo_url}/{dictionary}.csv"
             dict_path = f"{ApeConfig.dictionary_dir}/{dictionary}.csv"
 
-            print(f"Initializing dictionary [{dictionary}] from {url} at {dict_path}")
-            download_if_not_exists(
-                artifact_url=url,
-                download_dir=ApeConfig.dictionary_dir,
-                auth=ApeConfig.credentials
-            )
+            if not os.path.isfile(dict_path):
+                raise RuntimeError(f"Unable to find required file {dictionary}. Make sure it is available under the model path: {ApeConfig.dictionary_dir}")
 
             self.dictionaries[dictionary] = TermDict.from_csv(dict_path)
 

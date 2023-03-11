@@ -37,14 +37,12 @@ FROM base as build
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY api-utils ./api-utils
 COPY ape-model ./ape-model
 COPY mt-model ./mt-model
 
-RUN pip install ./api-utils && \
-    pip install ./ape-model && \
+RUN pip install ./ape-model && \
     pip install ./mt-model && \
-    rm -rf ape-utils && rm -rf ape-model && rm -rf mt-model
+    rm -rf ape-model && rm -rf mt-model
 
 # Copy api source files & configs
 COPY gunicorn.conf.py .
