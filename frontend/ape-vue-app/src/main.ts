@@ -20,18 +20,20 @@ import './styles/index.css';
 import { storeKey, store } from './store/index';
 import options from './modules/options';
 import { Notifier, notifierKey } from './modules/Notifier';
+import { authenticationIsEnabled } from './modules/otherUtil';
 
-// Firebase authentication
-initializeApp(options.firebaseConfig);
-const auth = getAuth();
-setPersistence(auth, options.loginPersistence);
-
-// Update user in application store whenever the auth state changes
-auth.onAuthStateChanged((user) => {
-  store.methods.updateState({
-    user,
+if (authenticationIsEnabled()) {
+  initializeApp(options.firebaseConfig);
+  const auth = getAuth();
+  setPersistence(auth, options.loginPersistence);
+  // Update user in application store whenever the auth state changes
+  auth.onAuthStateChanged((user) => {
+    store.methods.updateState({
+      user,
+    });
   });
-});
+}
+// Firebase authentication
 
 const app = createApp(App);
 

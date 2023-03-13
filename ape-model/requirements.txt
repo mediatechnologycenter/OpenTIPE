@@ -14,3 +14,5 @@ stanza==1.2.3
 git+https://github.com/cisnlp/simalign.git#egg=simalign
 sacremoses==0.0.45
 deepspeed==0.5.4
+
+git+https://github.com/mediatechnologycenter/api-utils.git

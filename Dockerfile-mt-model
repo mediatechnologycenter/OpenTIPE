@@ -44,16 +44,14 @@ FROM base-gpu as build
 COPY mt-model/requirements.txt .
 RUN pip install -r requirements.txt --ignore-installed ruamel.yaml # ruamel.yaml: Dependency conflict within huggingface
 
-# Copy api-utils & ape libraries
-COPY api-utils ./api-utils
+# Copy ape libraries
 COPY ape-model ./ape-model
 COPY mtc_ape_web_editor ./mtc-ape-web-editor/mtc_ape_web_editor
 COPY setup.py ./mtc-ape-web-editor/
 
-RUN pip install ./api-utils --use-feature=in-tree-build && \
-    pip install ./ape-model --use-feature=in-tree-build && \
+RUN pip install ./ape-model --use-feature=in-tree-build && \
     pip install ./mtc-ape-web-editor --use-feature=in-tree-build && \
-    rm -rf ape-utils && rm -rf ape-model && rm -rf mtc-ape-web-editor
+    rm -rf ape-model && rm -rf mtc-ape-web-editor
 
 # Copy source code
 COPY mt-model .

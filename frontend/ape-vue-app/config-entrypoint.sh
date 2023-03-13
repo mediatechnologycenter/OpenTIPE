@@ -16,36 +16,39 @@
 
 # First we create a Javascript expression that creates an object containing the env variables
 # and stores it in window.configs.
-echo "Creating JSON_STRING"
-JSON_STRING="window.configs = {"
+
+echo Building environment variables ENV_OBJECT
+
+ENV_OBJECT="window.configs = {\n"
+
 
 # In the following loop, we split the env file by newline
 IFS=$'\n'
-
-# Iterate over all environment variables
+# Iterate through all environment variables
 for item in $(env); do
-  value=${item#*=}
-  name=${item%%=*}
+  KEY=${item%%=*}
+  VALUE=${item#*=}
 
   # We care only about env variables that start with the prefix "VUE_APP"
-  case "$name" in "VUE_APP"*)
-    # Append the variable name and value to the JSON_STRING
-  	JSON_STRING="$JSON_STRING \"$name\": \"$value\","
+  case "$KEY" in "VUE_APP"*)
+    # Append the variable name and value to the ENV_OBJECT
+    ENV_OBJECT="${ENV_OBJECT}    \"${KEY}\":\'${VALUE}\',\n"
   esac
 done
 
-# Finalize the Javascript expression
-JSON_STRING="$JSON_STRING }"
+# Finalize object
+ENV_OBJECT="${ENV_OBJECT}};"
+echo "Created the following object for environment variables:"
+echo "$ENV_OBJECT"
+echo
 
-echo "Done:"
-echo $JSON_STRING
 
 # Now we replace the placeholder in index.html with the Javascript expression (JSON_STRING) that
 # we just created. Once the frontend starts, the browser will evaluate this expression and thus
 # store our env variables in a window.configs object.
 echo "Writing the JSON_STRING to index.html"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i "" "s@// CONFIGURATIONS_PLACEHOLDER@${JSON_STRING}@" /usr/share/nginx/html/index.html
+  sed -i "" "s@// CONFIGURATIONS_PLACEHOLDER@${ENV_OBJECT}@" /usr/share/nginx/html/index.html
 else
-  sed -i "s@// CONFIGURATIONS_PLACEHOLDER@${JSON_STRING}@" /usr/share/nginx/html/index.html
+  sed -i "s@// CONFIGURATIONS_PLACEHOLDER@${ENV_OBJECT}@" /usr/share/nginx/html/index.html
 fi

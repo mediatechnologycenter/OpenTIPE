@@ -25,9 +25,7 @@ setup(
     author_email="mtc@ethz.ch",
     packages=["mtc_ape_api"],
     install_requires=[
-        #"mtc_api_utils @",
-        #"mtc_ape_web_editor @",
-        #"mtc_ape_web_editor @",
+        "mtc_api_utils @ git+https://github.com/mediatechnologycenter/api-utils.git",
     ],
     classifiers=[
         "Development Status :: 4 - Beta",

@@ -14,11 +14,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Download config files
-echo "usr: $USR"
-
-curl -u "$USR:$PWD" $FIREBASE_URL/firebaseConfig-dev.json \
-    > /app/src/modules/config/firebaseConfig.json
-
 # Call parent entrypoint
 source docker-entrypoint.sh
